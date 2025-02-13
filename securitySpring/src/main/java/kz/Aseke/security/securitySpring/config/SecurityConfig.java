@@ -57,7 +57,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                                 .requestMatchers("/", "/sign-in-page", "/sign-up-page", "/to-sign-up", "/css/**", "/js/**").permitAll()
                                 .requestMatchers("/api/**").permitAll()
-                                .anyRequest().authenticated()
+                                .anyRequest().permitAll()
                 )
                 .logout(logout -> logout
                         .logoutUrl("/sign-out")
@@ -66,6 +66,7 @@ public class SecurityConfig {
                         .deleteCookies("JSESSIONID")
                         .permitAll()
                 );
+        http.csrf(csrf -> csrf.disable());
 
         return http.build();
     }

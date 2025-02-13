@@ -10,21 +10,34 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping(value = "/course")
 @RequiredArgsConstructor
-@RequestMapping(value = "/api/course")
-public class CourseController {
+public class CourseRestController {
 
     private final CourseService courseService;
 
-
-    @GetMapping(value = "/get-course-list")
-    public List<CourseDTO> getCourses(){
+    @GetMapping
+    public List<CourseDTO> courseList(){
         return courseService.getAllCourses();
     }
 
-    @PostMapping(value = "/add-course")
+    @GetMapping(value = "{id}")
+    public CourseDTO getCourse(@PathVariable Long id){
+        return courseService.getCourse(id);
+    }
+
+    @PostMapping
     public CourseDTO addCourse(@RequestBody CourseDTO course){
         return courseService.addCourse(course);
     }
 
+    @PutMapping
+    public CourseDTO updateCourse(@RequestBody CourseDTO course){
+        return courseService.updateCourse(course);
+    }
+
+    @DeleteMapping(value = "{id}")
+    public void deleteCourse(@PathVariable Long id){
+        courseService.deleteCourse(id);
+    }
 }
